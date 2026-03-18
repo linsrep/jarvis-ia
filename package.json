@@ -1,17 +1,28 @@
 {
-  "name": "",
+  "name": "jarvis-desktop",
   "type": "module",
   "version": "0.0.1",
+  "main": "electron/main.js",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:desktop\"",
+    "dev:web": "astro dev --host 127.0.0.1 --port 4321",
+    "dev:desktop": "wait-on tcp:127.0.0.1:4321 && cross-env ELECTRON_START_URL=http://127.0.0.1:4321 electron .",
     "build": "astro build",
     "preview": "astro preview",
+    "start": "electron .",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.17",
     "astro": "^6.0.5"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^41.0.3",
+    "wait-on": "^9.0.4"
   }
 }

@@ -1,0 +1,117 @@
+---
+import styles from "../styles/balloon.module.css";
+---
+
+<section class={styles.shell}>
+
+  <div class={styles.ballonContainer}>
+    <header class={styles.header}>
+      <div>
+        <p class={styles.eyebrow}>GOATECH - AGENTE DESKTOP</p>
+        <h1 class={styles.title}>Jarvis, prazer!</h1>
+      </div>
+      <span class={styles.status}>Local</span>
+    </header>
+
+    <div
+      class={styles.messages}
+      data-messages
+      data-user-message-class={`${styles.message} ${styles.userMessage}`}
+      data-assistant-message-class={`${styles.message} ${styles.assistantMessage}`}
+      data-message-author-class={styles.messageAuthor}
+      data-message-text-class={styles.messageText}
+    >
+      <article class={`${styles.message} ${styles.assistantMessage}`}>
+        <p class={styles.messageAuthor}>Agente Jarvis</p>
+        <p class={styles.messageText}>
+          Pronto para conversar com o seu modelo local. Digite uma mensagem para testar o fluxo da janela da bandeja.
+        </p>
+      </article>
+    </div>
+
+    <form class={styles.composer} data-chat-form>
+      <label class={styles.srOnly} for="jarvis-input">Mensagem</label>
+      <div class={styles.inputWrap}>
+        <input
+          id="jarvis-input"
+          class={styles.input}
+          placeholder="Pergunte algo ao seu Jarvis local..."
+          type="text"
+          data-balloon-input
+        />
+
+        <button type="submit" class={styles.button} data-balloon-button aria-label="Enviar mensagem">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class={styles.buttonIcon}>
+            <path
+              d="M10.2 5a1 1 0 0 1 .71.29l5.8 5.8a1.25 1.25 0 0 1 0 1.77l-5.8 5.8a1 1 0 1 1-1.42-1.41l4.1-4.1H8a1 1 0 1 1 0-2h5.59l-4.1-4.1A1 1 0 0 1 10.2 5Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector("[data-chat-form]");
+  const input = document.querySelector("[data-balloon-input]");
+  const messages = document.querySelector("[data-messages]");
+
+  function appendMessage(role, text) {
+    if (!(messages instanceof HTMLElement)) {
+      return;
+    }
+
+    const article = document.createElement("article");
+    article.className = role === "user"
+      ? messages.dataset.userMessageClass ?? ""
+      : messages.dataset.assistantMessageClass ?? "";
+
+    const author = document.createElement("p");
+    author.className = messages.dataset.messageAuthorClass ?? "";
+    author.textContent = role === "user" ? "Você" : "Jarvis";
+
+    const body = document.createElement("p");
+    body.className = messages.dataset.messageTextClass ?? "";
+    body.textContent = text;
+
+    article.append(author, body);
+    messages.append(article);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function submitMessage() {
+    if (!(input instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const text = input.value.trim();
+
+    if (!text) {
+      return;
+    }
+
+    console.log(text);
+    appendMessage("user", text);
+    input.value = "";
+
+    window.setTimeout(() => {
+      appendMessage("assistant", "Mensagem recebida. O próximo passo é conectar este envio ao seu modelo local.");
+    }, 250);
+  }
+
+  if (form instanceof HTMLFormElement && input instanceof HTMLInputElement) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      submitMessage();
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        submitMessage();
+      }
+    });
+  }
+</script>
