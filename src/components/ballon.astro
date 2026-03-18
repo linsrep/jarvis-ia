@@ -241,12 +241,12 @@ import styles from "../styles/balloon.module.css";
     system: "Você é o Jarvis desktop local, objetivo e útil. Desenvolvedor de várias linguagens de programação, focado em fornecer respostas claras e concisas. Sempre busque entender o contexto da pergunta para oferecer a melhor resposta possível.",
   };
 
-  let socket;
+  let socket: WebSocket | undefined;
   let isAwaitingResponse = false;
-  let pendingChatPayload = null;
-  let loadingMessageElement = null;
+  let pendingChatPayload: Record<string, unknown> | null = null;
+  let loadingMessageElement: HTMLElement | null = null;
 
-  function updateConnectionStatus(isOnline) {
+  function updateConnectionStatus(isOnline: boolean) {
     if (!(statusBadge instanceof HTMLElement)) {
       return;
     }
@@ -290,7 +290,7 @@ import styles from "../styles/balloon.module.css";
       : `Olá, ${preferredName}.`;
   }
 
-  function applySettings(settings) {
+  function applySettings(settings: Record<string, string>) {
     if (displayNameInput instanceof HTMLInputElement) {
       displayNameInput.value = settings.displayName || DEFAULT_SETTINGS.displayName;
     }
@@ -381,7 +381,7 @@ import styles from "../styles/balloon.module.css";
     loadingMessageElement = null;
   }
 
-  function appendMessage(role, text) {
+  function appendMessage(role: string, text: string) {
     if (!(messages instanceof HTMLElement)) {
       return;
     }
@@ -503,7 +503,7 @@ import styles from "../styles/balloon.module.css";
     return socket;
   }
 
-  function activeSocketSend(payload) {
+  function activeSocketSend(payload: Record<string, unknown>) {
     const activeSocket = connectSocket();
     if (!activeSocket) {
       return;
@@ -523,7 +523,7 @@ import styles from "../styles/balloon.module.css";
     activeSocket.addEventListener("open", sendPayload, { once: true });
   }
 
-  function setActiveView(viewName) {
+  function setActiveView(viewName: string) {
     for (const button of viewButtons) {
       const isActive = button instanceof HTMLButtonElement && button.dataset.viewTarget === viewName;
       const activeClass = button instanceof HTMLButtonElement ? button.dataset.activeClass : "";
