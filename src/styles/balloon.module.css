@@ -1,37 +1,86 @@
 .shell {
   position: relative;
   min-height: 100vh;
-  padding: 16px;
-  background: tr;
- /*  background:
-    radial-gradient(circle at top right, rgba(90, 161, 255, 0.38), transparent 26%),
-    radial-gradient(circle at top left, rgba(48, 214, 160, 0.2), transparent 24%),
-    linear-gradient(180deg, #08111f 0%, #0f1a2d 54%, #0a1220 100%); */
-  overflow: hidden;
+  padding: 16px 16px 16px 4px;
+  overflow: visible;
 }
 
-.glow {
+.windowDock {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: stretch;
+  height: calc(100vh - 32px);
+}
+
+.sideTabs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  padding-top: 88px;
+  padding-right: 0;
+}
+
+.sideTab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 88px;
+  margin-right: -10px;
+  border: 1px solid rgba(143, 168, 214, 0.14);
+  border-right: 0;
+  border-radius: 16px 0 0 16px;
+  background: linear-gradient(180deg, rgba(12, 23, 40, 0.96) 0%, rgba(7, 14, 24, 0.98) 100%);
+  color: rgba(184, 211, 255, 0.72);
+  box-shadow: 0 10px 24px rgba(3, 7, 18, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: transform 140ms ease, color 140ms ease, background 140ms ease;
+}
+
+.sideTab:hover {
+  color: #f2f7ff;
+  background: linear-gradient(180deg, rgba(17, 33, 56, 0.98) 0%, rgba(9, 18, 30, 0.98) 100%);
+  transform: translateX(-3px);
+}
+
+.sideTabActive {
+  color: #dff8ff;
+  background: linear-gradient(180deg, rgba(36, 92, 184, 0.88) 0%, rgba(14, 48, 105, 0.96) 100%);
+}
+
+.sideTabActive::after {
+  content: "";
   position: absolute;
-  inset: auto -12% -20% auto;
-  width: 220px;
-  height: 320px;
+  right: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
   border-radius: 999px;
-  background: rgba(84, 198, 255, 0.18); 
-  filter: blur(36px);
-  pointer-events: none;
+  background: rgba(91, 231, 196, 0.9);
+}
+
+.sideTabIcon {
+  width: 18px;
+  height: 18px;
 }
 
 .ballonContainer {
   position: relative;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  height: calc(100vh - 32px);
+  height: 100%;
   padding: 18px;
   border: 1px solid rgba(163, 189, 255, 0.16);
   border-radius: 26px;
   background: rgba(6, 15, 28, 1);
   backdrop-filter: blur(18px);
   overflow: hidden;
+}
+
+.content {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
 }
 
 .header {
@@ -42,10 +91,16 @@
   margin-bottom: 18px;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .eyebrow {
   margin: 0 0 4px;
   color: #8fb8ff;
-  font-size: 0.72rem;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -54,14 +109,14 @@
 .title {
   margin: 0;
   color: #f2f7ff;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   line-height: 1;
 }
 
 .status {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   padding: 8px 12px;
   border: 1px solid rgba(100, 255, 198, 0.22);
   border-radius: 999px;
@@ -69,6 +124,34 @@
   background: rgba(46, 158, 114, 0.16);
   font-size: 0.78rem;
   font-weight: 700;
+}
+
+.statusOnline {
+  border-color: rgba(100, 255, 198, 0.22);
+  color: #b8ffd6;
+  background: rgba(46, 158, 114, 0.16);
+}
+
+.statusOffline {
+  border-color: rgba(255, 107, 107, 0.22);
+  color: #ff9b9b;
+  background: rgba(255, 84, 84, 0.14);
+}
+
+.view {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 0;
+  height: 100%;
+}
+
+.historyView,
+.settingsView {
+  grid-template-rows: auto 1fr;
+}
+
+.viewHidden {
+  display: none;
 }
 
 .messages {
@@ -136,13 +219,57 @@
   white-space: pre-wrap;
 }
 
+.loadingMessage {
+  border-style: dashed;
+  opacity: 0.92;
+}
+
+.loadingDots {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.loadingDotsTrack {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.loadingDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(184, 211, 255, 0.85);
+  animation: loadingPulse 1.2s ease-in-out infinite;
+}
+
+.loadingDot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.loadingDot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes loadingPulse {
+  0%, 80%, 100% {
+    transform: scale(0.72);
+    opacity: 0.45;
+  }
+
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .composer {
   margin-top: 18px;
   padding: 10px 12px 12px;
   border: 1px solid rgba(143, 168, 214, 0.1);
   border-radius: 22px;
-  background:
-    linear-gradient(180deg, rgba(8, 15, 26, 0.98) 0%, rgba(4, 10, 18, 0.98) 100%);
+  background: linear-gradient(180deg, rgba(8, 15, 26, 0.98) 0%, rgba(4, 10, 18, 0.98) 100%);
 }
 
 .inputWrap {
@@ -204,6 +331,108 @@
 .buttonIcon {
   width: 16px;
   height: 16px;
+}
+
+.panelIntro {
+  margin-bottom: 18px;
+}
+
+.panelTitle {
+  margin: 0 0 8px;
+  color: #f2f7ff;
+  font-size: 1.2rem;
+}
+
+.panelText {
+  margin: 0;
+  color: #93a8cf;
+  line-height: 1.45;
+}
+
+.historyList {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 4px;
+}
+
+.historyCard {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid rgba(146, 176, 255, 0.14);
+  border-radius: 18px;
+  background: rgba(15, 28, 48, 0.92);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 140ms ease, background 140ms ease;
+}
+
+.historyCard:hover {
+  border-color: rgba(143, 184, 255, 0.26);
+  background: rgba(19, 36, 62, 0.98);
+  transform: translateY(-1px);
+}
+
+.historyTitle {
+  color: #eff5ff;
+  font-size: 0.98rem;
+}
+
+.historyMeta {
+  color: #8ea7d4;
+  font-size: 0.84rem;
+}
+
+.settingsList {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 4px;
+}
+
+.settingField {
+  display: grid;
+  gap: 8px;
+}
+
+.settingLabel {
+  color: #cfe0ff;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.settingControl,
+.settingTextarea {
+  width: 100%;
+  border: 1px solid rgba(152, 175, 221, 0.16);
+  border-radius: 14px;
+  background: rgba(10, 20, 35, 0.92);
+  color: #eff5ff;
+  font: inherit;
+  outline: none;
+}
+
+.settingControl {
+  height: 46px;
+  padding: 0 14px;
+}
+
+.settingTextarea {
+  min-height: 112px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+.settingControl:focus,
+.settingTextarea:focus {
+  border-color: rgba(100, 176, 255, 0.75);
+  box-shadow: 0 0 0 3px rgba(73, 141, 230, 0.18);
 }
 
 .srOnly {

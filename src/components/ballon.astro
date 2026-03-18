@@ -3,53 +3,174 @@ import styles from "../styles/balloon.module.css";
 ---
 
 <section class={styles.shell}>
+  <div class={styles.windowDock}>
+    <nav class={styles.sideTabs} aria-label="Seções do Jarvis">
+      <button
+        type="button"
+        class={`${styles.sideTab} ${styles.sideTabActive}`}
+        data-view-button
+        data-view-target="chat"
+        data-active-class={styles.sideTabActive}
+        aria-current="page"
+        aria-label="Chat"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" class={styles.sideTabIcon}>
+          <path
+            d="M6 7.75A2.75 2.75 0 0 1 8.75 5h6.5A2.75 2.75 0 0 1 18 7.75v4.5A2.75 2.75 0 0 1 15.25 15H11.4l-2.78 2.38A1 1 0 0 1 7 16.62V15.4A2.75 2.75 0 0 1 6 12.25v-4.5Z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
 
-  <div class={styles.ballonContainer}>
-    <header class={styles.header}>
-      <div>
-        <p class={styles.eyebrow}>GOATECH - AGENTE DESKTOP</p>
-        <h1 class={styles.title}>Jarvis, prazer!</h1>
+      <button
+        type="button"
+        class={styles.sideTab}
+        data-view-button
+        data-view-target="history"
+        data-active-class={styles.sideTabActive}
+        aria-label="Conversas salvas"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" class={styles.sideTabIcon}>
+          <path
+            d="M7.75 5A2.75 2.75 0 0 0 5 7.75v8.5A2.75 2.75 0 0 0 7.75 19h8.5A2.75 2.75 0 0 0 19 16.25v-8.5A2.75 2.75 0 0 0 16.25 5h-8.5Zm1.5 3a1 1 0 1 1 0 2h5.5a1 1 0 1 1 0 2h-5.5a1 1 0 1 1 0-2Zm0 4a1 1 0 1 1 0 2h3.25a1 1 0 1 1 0 2H9.25a1 1 0 1 1 0-2Z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        class={styles.sideTab}
+        data-view-button
+        data-view-target="settings"
+        data-active-class={styles.sideTabActive}
+        aria-label="Configurações"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" class={styles.sideTabIcon}>
+          <path
+            d="M12 8.75A3.25 3.25 0 1 0 12 15.25 3.25 3.25 0 0 0 12 8.75Zm8 3.25a1 1 0 0 1-.73.96l-1.17.3a6.88 6.88 0 0 1-.56 1.35l.62 1.04a1 1 0 0 1-.15 1.2l-.73.73a1 1 0 0 1-1.2.15l-1.04-.62a6.88 6.88 0 0 1-1.35.56l-.3 1.17A1 1 0 0 1 12.4 20h-1.03a1 1 0 0 1-.96-.73l-.3-1.17a6.88 6.88 0 0 1-1.35-.56l-1.04.62a1 1 0 0 1-1.2-.15l-.73-.73a1 1 0 0 1-.15-1.2l.62-1.04a6.88 6.88 0 0 1-.56-1.35l-1.17-.3A1 1 0 0 1 4 12.4v-1.03a1 1 0 0 1 .73-.96l1.17-.3c.13-.46.32-.91.56-1.35l-.62-1.04a1 1 0 0 1 .15-1.2l.73-.73a1 1 0 0 1 1.2-.15l1.04.62c.44-.24.89-.43 1.35-.56l.3-1.17A1 1 0 0 1 11.37 4h1.03a1 1 0 0 1 .96.73l.3 1.17c.46.13.91.32 1.35.56l1.04-.62a1 1 0 0 1 1.2.15l.73.73a1 1 0 0 1 .15 1.2l-.62 1.04c.24.44.43.89.56 1.35l1.17.3a1 1 0 0 1 .73.96v1.03Z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+    </nav>
+
+    <div class={styles.ballonContainer}>
+      <div class={styles.content}>
+        <header class={styles.header}>
+          <div>
+            <p class={styles.eyebrow}>GOATECH - AGENTE DESKTOP</p>
+            <h1 class={styles.title}>Jarvis, prazer!</h1>
+          </div>
+          <div class={styles.headerActions}>
+            <span
+              class={styles.status}
+              data-status-badge
+              data-online-class={styles.statusOnline}
+              data-offline-class={styles.statusOffline}
+            >
+              Local
+            </span>
+          </div>
+        </header>
+
+        <section class={styles.view} data-view-panel="chat">
+          <div
+            class={styles.messages}
+            data-messages
+            data-user-message-class={`${styles.message} ${styles.userMessage}`}
+            data-assistant-message-class={`${styles.message} ${styles.assistantMessage}`}
+            data-loading-message-class={`${styles.message} ${styles.assistantMessage} ${styles.loadingMessage}`}
+            data-loading-dots-track-class={styles.loadingDotsTrack}
+            data-loading-dot-class={styles.loadingDot}
+            data-message-author-class={styles.messageAuthor}
+            data-message-text-class={styles.messageText}
+          >
+            <article class={`${styles.message} ${styles.assistantMessage}`}>
+              <p class={styles.messageAuthor}>Agente Jarvis</p>
+              <p class={styles.messageText}>
+                Pronto para conversar com o seu modelo local. Digite uma mensagem para testar o fluxo da janela da bandeja.
+              </p>
+            </article>
+          </div>
+
+          <form class={styles.composer} data-chat-form>
+            <label class={styles.srOnly} for="jarvis-input">Mensagem</label>
+            <div class={styles.inputWrap}>
+              <input
+                id="jarvis-input"
+                class={styles.input}
+                placeholder="Pergunte algo ao Jarvis..."
+                type="text"
+                data-balloon-input
+              />
+
+              <button type="submit" class={styles.button} data-balloon-button aria-label="Enviar mensagem">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class={styles.buttonIcon}>
+                  <path
+                    d="M10.2 5a1 1 0 0 1 .71.29l5.8 5.8a1.25 1.25 0 0 1 0 1.77l-5.8 5.8a1 1 0 1 1-1.42-1.41l4.1-4.1H8a1 1 0 1 1 0-2h5.59l-4.1-4.1A1 1 0 0 1 10.2 5Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class={`${styles.view} ${styles.historyView} ${styles.viewHidden}`} data-view-panel="history" data-hidden-class={styles.viewHidden} hidden>
+          <div class={styles.panelIntro}>
+            <h2 class={styles.panelTitle}>Conversas salvas</h2>
+            <p class={styles.panelText}>Escolha uma conversa anterior ou inicie uma nova sessão com o seu agente.</p>
+          </div>
+
+          <div class={styles.historyList}>
+            <button type="button" class={styles.historyCard} data-open-chat>
+              <strong class={styles.historyTitle}>Nova conversa</strong>
+              <span class={styles.historyMeta}>Começar do zero agora</span>
+            </button>
+            <button type="button" class={styles.historyCard} data-open-chat>
+              <strong class={styles.historyTitle}>Jarvis local - testes</strong>
+              <span class={styles.historyMeta}>Última atividade há 5 min</span>
+            </button>
+            <button type="button" class={styles.historyCard} data-open-chat>
+              <strong class={styles.historyTitle}>Modelos do Ollama</strong>
+              <span class={styles.historyMeta}>Última atividade ontem</span>
+            </button>
+          </div>
+        </section>
+
+        <section class={`${styles.view} ${styles.settingsView} ${styles.viewHidden}`} data-view-panel="settings" data-hidden-class={styles.viewHidden} hidden>
+          <div class={styles.panelIntro}>
+            <h2 class={styles.panelTitle}>Configurações</h2>
+            <p class={styles.panelText}>Prepare o ambiente para o chat com Ollama e ajuste o comportamento do agente.</p>
+          </div>
+
+          <div class={styles.settingsList}>
+            <label class={styles.settingField}>
+              <span class={styles.settingLabel}>Modelo padrão</span>
+              <select class={styles.settingControl} data-setting-model>
+                <option>gemma3:4b</option>
+                <option>llama2</option>
+                <option>mistral</option>
+                <option>glm-4.7-flash:latest</option>
+                <option>qwen2.5</option>
+                <option>qwen3-coder:30b</option>
+              </select>
+            </label>
+
+            <label class={styles.settingField}>
+              <span class={styles.settingLabel}>Endpoint do Ollama</span>
+              <input class={styles.settingControl} type="text" value="http://127.0.0.1:11434" data-setting-endpoint />
+            </label>
+
+            <label class={styles.settingField}>
+              <span class={styles.settingLabel}>Mensagem de sistema</span>
+              <textarea class={styles.settingTextarea} rows="3" data-setting-system>Você é o Jarvis desktop local, objetivo e útil.</textarea>
+            </label>
+          </div>
+        </section>
       </div>
-      <span class={styles.status}>Local</span>
-    </header>
-
-    <div
-      class={styles.messages}
-      data-messages
-      data-user-message-class={`${styles.message} ${styles.userMessage}`}
-      data-assistant-message-class={`${styles.message} ${styles.assistantMessage}`}
-      data-message-author-class={styles.messageAuthor}
-      data-message-text-class={styles.messageText}
-    >
-      <article class={`${styles.message} ${styles.assistantMessage}`}>
-        <p class={styles.messageAuthor}>Agente Jarvis</p>
-        <p class={styles.messageText}>
-          Pronto para conversar com o seu modelo local. Digite uma mensagem para testar o fluxo da janela da bandeja.
-        </p>
-      </article>
     </div>
-
-    <form class={styles.composer} data-chat-form>
-      <label class={styles.srOnly} for="jarvis-input">Mensagem</label>
-      <div class={styles.inputWrap}>
-        <input
-          id="jarvis-input"
-          class={styles.input}
-          placeholder="Pergunte algo ao seu Jarvis local..."
-          type="text"
-          data-balloon-input
-        />
-
-        <button type="submit" class={styles.button} data-balloon-button aria-label="Enviar mensagem">
-          <svg viewBox="0 0 24 24" aria-hidden="true" class={styles.buttonIcon}>
-            <path
-              d="M10.2 5a1 1 0 0 1 .71.29l5.8 5.8a1.25 1.25 0 0 1 0 1.77l-5.8 5.8a1 1 0 1 1-1.42-1.41l4.1-4.1H8a1 1 0 1 1 0-2h5.59l-4.1-4.1A1 1 0 0 1 10.2 5Z"
-              fill="currentColor"
-            />
-          </svg>
-        </button>
-      </div>
-    </form>
   </div>
 </section>
 
@@ -57,8 +178,285 @@ import styles from "../styles/balloon.module.css";
   const form = document.querySelector("[data-chat-form]");
   const input = document.querySelector("[data-balloon-input]");
   const messages = document.querySelector("[data-messages]");
+  const statusBadge = document.querySelector("[data-status-badge]");
+  const viewButtons = Array.from(document.querySelectorAll("[data-view-button]"));
+  const viewPanels = Array.from(document.querySelectorAll("[data-view-panel]"));
+  const openChatButtons = Array.from(document.querySelectorAll("[data-open-chat]"));
+  const modelSelect = document.querySelector("[data-setting-model]");
+  const endpointInput = document.querySelector("[data-setting-endpoint]");
+  const systemInput = document.querySelector("[data-setting-system]");
+  const desktopApi = "jarvisDesktop" in window ? (window as Record<string, unknown>)["jarvisDesktop"] : undefined;
+  const SETTINGS_STORAGE_KEY = "jarvis.desktop.settings";
+  const DEFAULT_SETTINGS = {
+    model: "gemma3:4b",
+    endpoint: "http://127.0.0.1:11434",
+    system: "Você é o Jarvis desktop local, objetivo e útil. Desenvolvedor de várias linguagens de programação, focado em fornecer respostas claras e concisas. Sempre busque entender o contexto da pergunta para oferecer a melhor resposta possível.",
+  };
+  let socket: WebSocket | undefined;
+  let isAwaitingResponse = false;
+  let pendingChatPayload: Record<string, unknown> | null = null;
+  let loadingMessageElement: HTMLElement | null = null;
 
-  function appendMessage(role, text) {
+  function updateConnectionStatus(isOnline: boolean) {
+    if (!(statusBadge instanceof HTMLElement)) {
+      return;
+    }
+
+    const onlineClass = statusBadge.dataset.onlineClass;
+    const offlineClass = statusBadge.dataset.offlineClass;
+
+    statusBadge.textContent = isOnline ? "Local" : "Off";
+
+    if (onlineClass) {
+      statusBadge.classList.toggle(onlineClass, isOnline);
+    }
+
+    if (offlineClass) {
+      statusBadge.classList.toggle(offlineClass, !isOnline);
+    }
+  }
+
+  function showLoadingMessage() {
+    if (!(messages instanceof HTMLElement) || loadingMessageElement instanceof HTMLElement) {
+      return;
+    }
+
+    const article = document.createElement("article");
+    article.className = messages.dataset.loadingMessageClass ?? "";
+    article.setAttribute("data-loading-message", "true");
+
+    const author = document.createElement("p");
+    author.className = messages.dataset.messageAuthorClass ?? "";
+    author.textContent = "Jarvis";
+
+    const body = document.createElement("p");
+    body.className = messages.dataset.messageTextClass ?? "";
+    body.textContent = "Pensando";
+
+    const dots = document.createElement("span");
+    dots.className = messages.dataset.loadingDotsTrackClass ?? "";
+    dots.setAttribute("aria-hidden", "true");
+
+    for (let index = 0; index < 3; index += 1) {
+      const dot = document.createElement("span");
+      dot.className = messages.dataset.loadingDotClass ?? "";
+      dots.append(dot);
+    }
+
+    body.append(dots);
+    article.append(author, body);
+    messages.append(article);
+    messages.scrollTop = messages.scrollHeight;
+    loadingMessageElement = article;
+  }
+
+  function hideLoadingMessage() {
+    if (loadingMessageElement instanceof HTMLElement) {
+      loadingMessageElement.remove();
+    }
+
+    loadingMessageElement = null;
+  }
+
+  function readCurrentSettings() {
+    return {
+      model: modelSelect instanceof HTMLSelectElement ? modelSelect.value : DEFAULT_SETTINGS.model,
+      endpoint: endpointInput instanceof HTMLInputElement ? endpointInput.value.trim() || DEFAULT_SETTINGS.endpoint : DEFAULT_SETTINGS.endpoint,
+      system: systemInput instanceof HTMLTextAreaElement ? systemInput.value.trim() || DEFAULT_SETTINGS.system : DEFAULT_SETTINGS.system,
+    };
+  }
+
+  function applySettings(settings: Record<string, string>) {
+    if (modelSelect instanceof HTMLSelectElement) {
+      modelSelect.value = settings.model || DEFAULT_SETTINGS.model;
+    }
+
+    if (endpointInput instanceof HTMLInputElement) {
+      endpointInput.value = settings.endpoint || DEFAULT_SETTINGS.endpoint;
+    }
+
+    if (systemInput instanceof HTMLTextAreaElement) {
+      systemInput.value = settings.system || DEFAULT_SETTINGS.system;
+    }
+  }
+
+  function saveSettings() {
+    try {
+      window.localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(readCurrentSettings()));
+    } catch (error) {
+      console.error("Não foi possível salvar as configurações.", error);
+    }
+  }
+
+  function loadSettings() {
+    try {
+      const storedSettings = window.localStorage.getItem(SETTINGS_STORAGE_KEY);
+
+      if (!storedSettings) {
+        applySettings(DEFAULT_SETTINGS);
+        return;
+      }
+
+      const parsedSettings = JSON.parse(storedSettings);
+      applySettings({
+        model: typeof parsedSettings.model === "string" ? parsedSettings.model : DEFAULT_SETTINGS.model,
+        endpoint: typeof parsedSettings.endpoint === "string" ? parsedSettings.endpoint : DEFAULT_SETTINGS.endpoint,
+        system: typeof parsedSettings.system === "string" ? parsedSettings.system : DEFAULT_SETTINGS.system,
+      });
+    } catch (error) {
+      console.error("Não foi possível carregar as configurações salvas.", error);
+      applySettings(DEFAULT_SETTINGS);
+    }
+  }
+
+  function connectSocket() {
+    if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) {
+      return socket;
+    }
+
+    socket = new WebSocket("ws://127.0.0.1:8080");
+
+    socket.addEventListener("open", () => {
+      updateConnectionStatus(true);
+    });
+
+    socket.addEventListener("message", (event) => {
+      try {
+        const payload = JSON.parse(event.data);
+
+        if (payload.type === "assistant-message") {
+          hideLoadingMessage();
+          appendMessage("assistant", payload.content);
+          isAwaitingResponse = false;
+          pendingChatPayload = null;
+          return;
+        }
+
+        if (payload.type === "error") {
+          hideLoadingMessage();
+          appendMessage("assistant", `Erro: ${payload.content}`);
+          isAwaitingResponse = false;
+          pendingChatPayload = null;
+          return;
+        }
+
+        if (payload.type === "model-missing") {
+          hideLoadingMessage();
+          isAwaitingResponse = false;
+          const missingModel = String(payload.model || DEFAULT_SETTINGS.model);
+          const shouldInstall = window.confirm(`O modelo "${missingModel}" não está disponível localmente. Deseja baixar agora?`);
+
+          if (shouldInstall) {
+            appendMessage("assistant", `Baixando o modelo ${missingModel}. Isso pode levar alguns minutos.`);
+            activeSocketSend({
+              type: "install-model",
+              model: missingModel,
+              endpoint: endpointInput instanceof HTMLInputElement ? endpointInput.value.trim() : DEFAULT_SETTINGS.endpoint,
+            });
+            return;
+          }
+
+          if (modelSelect instanceof HTMLSelectElement) {
+            modelSelect.value = DEFAULT_SETTINGS.model;
+          }
+
+          saveSettings();
+          appendMessage("assistant", `Tudo bem. Vou continuar com o modelo padrão ${DEFAULT_SETTINGS.model}.`);
+
+          if (pendingChatPayload) {
+            pendingChatPayload.model = DEFAULT_SETTINGS.model;
+            isAwaitingResponse = true;
+            activeSocketSend(pendingChatPayload);
+          }
+          return;
+        }
+
+        if (payload.type === "model-installed") {
+          hideLoadingMessage();
+          appendMessage("assistant", payload.content || "Modelo instalado com sucesso.");
+
+          if (pendingChatPayload) {
+            isAwaitingResponse = true;
+            showLoadingMessage();
+            activeSocketSend(pendingChatPayload);
+          }
+          return;
+        }
+      } catch {
+        hideLoadingMessage();
+        appendMessage("assistant", String(event.data));
+        isAwaitingResponse = false;
+      }
+    });
+
+    socket.addEventListener("close", () => {
+      updateConnectionStatus(false);
+      hideLoadingMessage();
+      if (isAwaitingResponse) {
+        appendMessage("assistant", "A conexão com o bridge local foi encerrada antes da resposta.");
+        isAwaitingResponse = false;
+      }
+    });
+
+    socket.addEventListener("error", () => {
+      updateConnectionStatus(false);
+      hideLoadingMessage();
+      appendMessage("assistant", "Não foi possível conectar ao servidor local em ws://127.0.0.1:8080.");
+      isAwaitingResponse = false;
+    });
+
+    return socket;
+  }
+
+  function activeSocketSend(payload: Record<string, unknown>) {
+    const activeSocket = connectSocket();
+    if (!activeSocket) return;
+    const serializedPayload = JSON.stringify(payload);
+
+    const sendPayload = () => {
+      activeSocket.send(serializedPayload);
+    };
+
+    if (activeSocket.readyState === WebSocket.OPEN) {
+      sendPayload();
+      return;
+    }
+
+    activeSocket.addEventListener("open", sendPayload, { once: true });
+  }
+
+  function setActiveView(viewName: string) {
+    for (const button of viewButtons) {
+      const isActive = button instanceof HTMLButtonElement && button.dataset.viewTarget === viewName;
+      const activeClass = button instanceof HTMLButtonElement ? button.dataset.activeClass : "";
+
+      if (activeClass) {
+        button.classList.toggle(activeClass, isActive);
+      }
+
+      if (isActive) {
+        button.setAttribute("aria-current", "page");
+      } else {
+        button.removeAttribute("aria-current");
+      }
+    }
+
+    for (const panel of viewPanels) {
+      if (!(panel instanceof HTMLElement)) {
+        continue;
+      }
+
+      const isActive = panel.dataset.viewPanel === viewName;
+      panel.hidden = !isActive;
+      const hiddenClass = panel.dataset.hiddenClass;
+
+      if (hiddenClass) {
+        panel.classList.toggle(hiddenClass, !isActive);
+      }
+    }
+  }
+
+  function appendMessage(role: string, text: string) {
     if (!(messages instanceof HTMLElement)) {
       return;
     }
@@ -92,13 +490,21 @@ import styles from "../styles/balloon.module.css";
       return;
     }
 
-    console.log(text);
     appendMessage("user", text);
     input.value = "";
+    setActiveView("chat");
+    isAwaitingResponse = true;
+    showLoadingMessage();
 
-    window.setTimeout(() => {
-      appendMessage("assistant", "Mensagem recebida. O próximo passo é conectar este envio ao seu modelo local.");
-    }, 250);
+    const settings = readCurrentSettings();
+    pendingChatPayload = {
+      type: "chat",
+      message: text,
+      model: settings.model,
+      endpoint: settings.endpoint,
+      system: settings.system,
+    };
+    activeSocketSend(pendingChatPayload);
   }
 
   if (form instanceof HTMLFormElement && input instanceof HTMLInputElement) {
@@ -114,4 +520,40 @@ import styles from "../styles/balloon.module.css";
       }
     });
   }
+
+  for (const button of viewButtons) {
+    if (!(button instanceof HTMLButtonElement)) {
+      continue;
+    }
+
+    button.addEventListener("click", () => {
+      const target = button.dataset.viewTarget;
+
+      if (target) {
+        setActiveView(target);
+      }
+    });
+  }
+
+  for (const button of openChatButtons) {
+    if (!(button instanceof HTMLButtonElement)) {
+      continue;
+    }
+
+    button.addEventListener("click", () => {
+      setActiveView("chat");
+      if (input instanceof HTMLElement) input.focus();
+    });
+  }
+
+  for (const element of [modelSelect, endpointInput, systemInput]) {
+    if (element instanceof HTMLInputElement || element instanceof HTMLSelectElement || element instanceof HTMLTextAreaElement) {
+      element.addEventListener("change", saveSettings);
+      element.addEventListener("input", saveSettings);
+    }
+  }
+
+  loadSettings();
+  updateConnectionStatus(false);
+  connectSocket();
 </script>

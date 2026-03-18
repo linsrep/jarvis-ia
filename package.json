@@ -7,7 +7,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:desktop\"",
+    "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:server\" \"npm:dev:desktop\"",
+    "dev:server": "node server/ws.js",
     "dev:web": "astro dev --host 127.0.0.1 --port 4321",
     "dev:desktop": "wait-on tcp:127.0.0.1:4321 && cross-env ELECTRON_START_URL=http://127.0.0.1:4321 electron .",
     "build": "astro build",
@@ -17,12 +18,16 @@
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.17",
-    "astro": "^6.0.5"
+    "astro": "^6.0.5",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "electron": "^41.0.3",
     "wait-on": "^9.0.4"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.1.0"
   }
 }

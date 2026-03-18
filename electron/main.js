@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, Tray, nativeImage, screen } from "electron";
+import { app, BrowserWindow, Menu, Tray, nativeImage, screen, ipcMain } from "electron";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -155,6 +155,11 @@ function createTray() {
     );
   });
 }
+
+ipcMain.handle("jarvis:hide-window", () => {
+  trayWindow?.hide();
+  return true;
+});
 
 app.whenReady().then(() => {
   createTrayWindow();
