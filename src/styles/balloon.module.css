@@ -113,6 +113,12 @@
   line-height: 1;
 }
 
+.subtitle {
+  margin: 8px 0 0;
+  color: #93a8cf;
+  font-size: 0.9rem;
+}
+
 .status {
   display: inline-flex;
   align-items: center;
@@ -139,50 +145,82 @@
 }
 
 .view {
+  position: relative;
   display: grid;
   grid-template-rows: 1fr auto;
   min-height: 0;
   height: 100%;
+  z-index: 1;
 }
 
 .historyView,
 .settingsView {
   grid-template-rows: auto 1fr;
+  z-index: 3;
+}
+
+.historyView:not(.viewHidden),
+.settingsView:not(.viewHidden) {
+  padding: 4px 2px 0;
+  background: linear-gradient(180deg, rgba(7, 15, 28, 0.98) 0%, rgba(6, 15, 28, 1) 100%);
+  border-radius: 20px;
+  box-shadow: 0 18px 48px rgba(3, 7, 18, 0.22);
 }
 
 .viewHidden {
   display: none;
 }
 
-.messages {
+.messages,
+.historyList,
+.settingsList,
+.settingTextarea {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(143, 184, 255, 0.62) rgba(8, 17, 31, 0.92);
+}
+
+.messages,
+.historyList,
+.settingsList {
   display: flex;
   flex-direction: column;
   gap: 12px;
   min-height: 0;
+  padding-bottom: 12px;
   padding-right: 4px;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(143, 184, 255, 0.48) rgba(11, 22, 39, 0.72);
 }
 
-.messages::-webkit-scrollbar {
+.messages::-webkit-scrollbar,
+.historyList::-webkit-scrollbar,
+.settingsList::-webkit-scrollbar,
+.settingTextarea::-webkit-scrollbar {
   width: 10px;
 }
 
-.messages::-webkit-scrollbar-track {
+.messages::-webkit-scrollbar-track,
+.historyList::-webkit-scrollbar-track,
+.settingsList::-webkit-scrollbar-track,
+.settingTextarea::-webkit-scrollbar-track {
   border-radius: 999px;
-  background: rgba(11, 22, 39, 0.72);
+  background: rgba(8, 17, 31, 0.92);
 }
 
-.messages::-webkit-scrollbar-thumb {
-  border: 2px solid rgba(11, 22, 39, 0.72);
+.messages::-webkit-scrollbar-thumb,
+.historyList::-webkit-scrollbar-thumb,
+.settingsList::-webkit-scrollbar-thumb,
+.settingTextarea::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(8, 17, 31, 0.92);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(143, 184, 255, 0.72) 0%, rgba(91, 231, 196, 0.62) 100%);
+  background: linear-gradient(180deg, rgba(143, 184, 255, 0.86) 0%, rgba(91, 231, 196, 0.68) 100%);
 }
 
-.messages::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(159, 196, 255, 0.82) 0%, rgba(110, 241, 208, 0.72) 100%);
+.messages::-webkit-scrollbar-thumb:hover,
+.historyList::-webkit-scrollbar-thumb:hover,
+.settingsList::-webkit-scrollbar-thumb:hover,
+.settingTextarea::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(171, 206, 255, 0.94) 0%, rgba(122, 245, 214, 0.82) 100%);
 }
 
 .message {
@@ -265,11 +303,11 @@
 }
 
 .composer {
-  margin-top: 18px;
-  padding: 10px 12px 12px;
-  border: 1px solid rgba(143, 168, 214, 0.1);
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(8, 15, 26, 0.98) 0%, rgba(4, 10, 18, 0.98) 100%);
+  margin-top: 0px;
+  padding: 0px 0px 0px 0px;
+  /* border: 1px solid rgba(143, 168, 214, 0.1);
+  border-radius: 22px; */
+  /* background: linear-gradient(180deg, rgba(8, 15, 26, 0.98) 0%, rgba(4, 10, 18, 0.98) 100%); */
 }
 
 .inputWrap {
@@ -281,7 +319,7 @@
   height: 48px;
   padding: 0 54px 0 16px;
   border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 999px;
+  border-radius: 15px;
   background: rgba(255, 255, 255, 0.18);
   color: #f3f7ff;
   font: inherit;
@@ -353,18 +391,18 @@
   display: grid;
   gap: 12px;
   align-content: start;
-  overflow-y: auto;
   min-height: 0;
   padding-right: 4px;
 }
 
 .historyCard {
   display: grid;
-  gap: 6px;
-  padding: 16px;
+  gap: 10px;
+  padding: 18px;
   border: 1px solid rgba(146, 176, 255, 0.14);
-  border-radius: 18px;
-  background: rgba(15, 28, 48, 0.92);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(15, 28, 48, 0.94) 0%, rgba(10, 20, 35, 0.96) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
   color: inherit;
   text-align: left;
   cursor: pointer;
@@ -377,9 +415,48 @@
   transform: translateY(-1px);
 }
 
+.historyHeroCard {
+  border-color: rgba(91, 231, 196, 0.18);
+  background: linear-gradient(180deg, rgba(19, 41, 68, 0.96) 0%, rgba(11, 27, 45, 0.98) 100%);
+  cursor: default;
+}
+
+.historyHeroCard:hover {
+  transform: none;
+  background: linear-gradient(180deg, rgba(19, 41, 68, 0.96) 0%, rgba(11, 27, 45, 0.98) 100%);
+  border-color: rgba(91, 231, 196, 0.18);
+}
+
+.historyCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .historyTitle {
   color: #eff5ff;
   font-size: 0.98rem;
+}
+
+.historyBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid rgba(143, 184, 255, 0.16);
+  border-radius: 999px;
+  color: #b8d4ff;
+  background: rgba(143, 184, 255, 0.08);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.historyDescription {
+  margin: 0;
+  color: #9cb2d9;
+  line-height: 1.45;
 }
 
 .historyMeta {
@@ -387,13 +464,52 @@
   font-size: 0.84rem;
 }
 
+.historyAction {
+  justify-self: start;
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(91, 231, 196, 0.92) 0%, rgba(47, 125, 246, 0.88) 100%);
+  color: #031a16;
+  font-weight: 800;
+  cursor: pointer;
+}
+
 .settingsList {
   display: grid;
   gap: 14px;
   align-content: start;
-  overflow-y: auto;
   min-height: 0;
   padding-right: 4px;
+}
+
+.settingsCard {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid rgba(146, 176, 255, 0.12);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(15, 28, 48, 0.94) 0%, rgba(10, 20, 35, 0.96) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.settingsCardHeader {
+  display: grid;
+  gap: 6px;
+}
+
+.settingsCardTitle {
+  margin: 0;
+  color: #f2f7ff;
+  font-size: 1rem;
+}
+
+.settingsCardText {
+  margin: 0;
+  color: #8ea7d4;
+  line-height: 1.45;
+  font-size: 0.88rem;
 }
 
 .settingField {

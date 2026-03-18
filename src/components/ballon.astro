@@ -61,6 +61,7 @@ import styles from "../styles/balloon.module.css";
           <div>
             <p class={styles.eyebrow}>GOATECH - AGENTE DESKTOP</p>
             <h1 class={styles.title}>Jarvis, prazer!</h1>
+            <p class={styles.subtitle} data-display-name-greeting>Seu assistente local.</p>
           </div>
           <div class={styles.headerActions}>
             <span
@@ -87,7 +88,7 @@ import styles from "../styles/balloon.module.css";
             data-message-text-class={styles.messageText}
           >
             <article class={`${styles.message} ${styles.assistantMessage}`}>
-              <p class={styles.messageAuthor}>Agente Jarvis</p>
+              <p class={styles.messageAuthor}>Jarvis</p>
               <p class={styles.messageText}>
                 Pronto para conversar com o seu modelo local. Digite uma mensagem para testar o fluxo da janela da bandeja.
               </p>
@@ -124,16 +125,30 @@ import styles from "../styles/balloon.module.css";
           </div>
 
           <div class={styles.historyList}>
+            <section class={`${styles.historyCard} ${styles.historyHeroCard}`}>
+              <div class={styles.historyCardHeader}>
+                <strong class={styles.historyTitle}>Nova conversa</strong>
+                <span class={styles.historyBadge}>Pronto</span>
+              </div>
+              <p class={styles.historyDescription}>Abra um novo contexto limpo para conversar com o Jarvis sem depender do histórico anterior.</p>
+              <button type="button" class={styles.historyAction} data-open-chat>Começar agora</button>
+            </section>
+
             <button type="button" class={styles.historyCard} data-open-chat>
-              <strong class={styles.historyTitle}>Nova conversa</strong>
-              <span class={styles.historyMeta}>Começar do zero agora</span>
-            </button>
-            <button type="button" class={styles.historyCard} data-open-chat>
-              <strong class={styles.historyTitle}>Jarvis local - testes</strong>
+              <div class={styles.historyCardHeader}>
+                <strong class={styles.historyTitle}>Jarvis local - testes</strong>
+                <span class={styles.historyBadge}>Recente</span>
+              </div>
+              <p class={styles.historyDescription}>Ajustes de prompts, status local e fluxo da janela da bandeja.</p>
               <span class={styles.historyMeta}>Última atividade há 5 min</span>
             </button>
+
             <button type="button" class={styles.historyCard} data-open-chat>
-              <strong class={styles.historyTitle}>Modelos do Ollama</strong>
+              <div class={styles.historyCardHeader}>
+                <strong class={styles.historyTitle}>Modelos do Ollama</strong>
+                <span class={styles.historyBadge}>Arquivo</span>
+              </div>
+              <p class={styles.historyDescription}>Discussões sobre modelos instalados, desempenho e fallback do modelo padrão.</p>
               <span class={styles.historyMeta}>Última atividade ontem</span>
             </button>
           </div>
@@ -142,31 +157,62 @@ import styles from "../styles/balloon.module.css";
         <section class={`${styles.view} ${styles.settingsView} ${styles.viewHidden}`} data-view-panel="settings" data-hidden-class={styles.viewHidden} hidden>
           <div class={styles.panelIntro}>
             <h2 class={styles.panelTitle}>Configurações</h2>
-            <p class={styles.panelText}>Prepare o ambiente para o chat com Ollama e ajuste o comportamento do agente.</p>
+            <p class={styles.panelText}>Personalize o Jarvis e ajuste como ele conversa com você e com o Ollama.</p>
           </div>
 
           <div class={styles.settingsList}>
-            <label class={styles.settingField}>
-              <span class={styles.settingLabel}>Modelo padrão</span>
-              <select class={styles.settingControl} data-setting-model>
-                <option>gemma3:4b</option>
-                <option>llama2</option>
-                <option>mistral</option>
-                <option>glm-4.7-flash:latest</option>
-                <option>qwen2.5</option>
-                <option>qwen3-coder:30b</option>
-              </select>
-            </label>
+            <section class={styles.settingsCard}>
+              <div class={styles.settingsCardHeader}>
+                <h3 class={styles.settingsCardTitle}>Perfil</h3>
+                <p class={styles.settingsCardText}>Defina como o Jarvis deve te chamar na interface e nas respostas.</p>
+              </div>
 
-            <label class={styles.settingField}>
-              <span class={styles.settingLabel}>Endpoint do Ollama</span>
-              <input class={styles.settingControl} type="text" value="http://127.0.0.1:11434" data-setting-endpoint />
-            </label>
+              <label class={styles.settingField}>
+                <span class={styles.settingLabel}>Como devo te chamar?</span>
+                <input
+                  class={styles.settingControl}
+                  type="text"
+                  placeholder="Ex.: Diogo Lins"
+                  data-setting-display-name
+                />
+              </label>
+            </section>
 
-            <label class={styles.settingField}>
-              <span class={styles.settingLabel}>Mensagem de sistema</span>
-              <textarea class={styles.settingTextarea} rows="3" data-setting-system>Você é o Jarvis desktop local, objetivo e útil.</textarea>
-            </label>
+            <section class={styles.settingsCard}>
+              <div class={styles.settingsCardHeader}>
+                <h3 class={styles.settingsCardTitle}>Modelo local</h3>
+                <p class={styles.settingsCardText}>Escolha o modelo padrão e o endpoint usado para conversar com o Ollama.</p>
+              </div>
+
+              <label class={styles.settingField}>
+                <span class={styles.settingLabel}>Modelo padrão</span>
+                <select class={styles.settingControl} data-setting-model>
+                  <option>gemma3:4b</option>
+                  <option>llama2</option>
+                  <option>mistral</option>
+                  <option>glm-4.7-flash:latest</option>
+                  <option>qwen2.5</option>
+                  <option>qwen3-coder:30b</option>
+                </select>
+              </label>
+
+              <label class={styles.settingField}>
+                <span class={styles.settingLabel}>Endpoint do Ollama</span>
+                <input class={styles.settingControl} type="text" value="http://127.0.0.1:11434" data-setting-endpoint />
+              </label>
+            </section>
+
+            <section class={styles.settingsCard}>
+              <div class={styles.settingsCardHeader}>
+                <h3 class={styles.settingsCardTitle}>Comportamento</h3>
+                <p class={styles.settingsCardText}>Ajuste a instrução base usada pelo Jarvis antes de cada resposta.</p>
+              </div>
+
+              <label class={styles.settingField}>
+                <span class={styles.settingLabel}>Mensagem de sistema</span>
+                <textarea class={styles.settingTextarea} rows="4" data-setting-system>Você é o Jarvis desktop local, objetivo e útil.</textarea>
+              </label>
+            </section>
           </div>
         </section>
       </div>
@@ -179,25 +225,28 @@ import styles from "../styles/balloon.module.css";
   const input = document.querySelector("[data-balloon-input]");
   const messages = document.querySelector("[data-messages]");
   const statusBadge = document.querySelector("[data-status-badge]");
+  const displayNameGreeting = document.querySelector("[data-display-name-greeting]");
   const viewButtons = Array.from(document.querySelectorAll("[data-view-button]"));
   const viewPanels = Array.from(document.querySelectorAll("[data-view-panel]"));
   const openChatButtons = Array.from(document.querySelectorAll("[data-open-chat]"));
+  const displayNameInput = document.querySelector("[data-setting-display-name]");
   const modelSelect = document.querySelector("[data-setting-model]");
   const endpointInput = document.querySelector("[data-setting-endpoint]");
   const systemInput = document.querySelector("[data-setting-system]");
-  const desktopApi = "jarvisDesktop" in window ? (window as Record<string, unknown>)["jarvisDesktop"] : undefined;
   const SETTINGS_STORAGE_KEY = "jarvis.desktop.settings";
   const DEFAULT_SETTINGS = {
+    displayName: "",
     model: "gemma3:4b",
     endpoint: "http://127.0.0.1:11434",
     system: "Você é o Jarvis desktop local, objetivo e útil. Desenvolvedor de várias linguagens de programação, focado em fornecer respostas claras e concisas. Sempre busque entender o contexto da pergunta para oferecer a melhor resposta possível.",
   };
-  let socket: WebSocket | undefined;
-  let isAwaitingResponse = false;
-  let pendingChatPayload: Record<string, unknown> | null = null;
-  let loadingMessageElement: HTMLElement | null = null;
 
-  function updateConnectionStatus(isOnline: boolean) {
+  let socket;
+  let isAwaitingResponse = false;
+  let pendingChatPayload = null;
+  let loadingMessageElement = null;
+
+  function updateConnectionStatus(isOnline) {
     if (!(statusBadge instanceof HTMLElement)) {
       return;
     }
@@ -216,6 +265,81 @@ import styles from "../styles/balloon.module.css";
     }
   }
 
+  function readCurrentSettings() {
+    return {
+      displayName: displayNameInput instanceof HTMLInputElement ? displayNameInput.value.trim() : DEFAULT_SETTINGS.displayName,
+      model: modelSelect instanceof HTMLSelectElement ? modelSelect.value : DEFAULT_SETTINGS.model,
+      endpoint: endpointInput instanceof HTMLInputElement ? endpointInput.value.trim() || DEFAULT_SETTINGS.endpoint : DEFAULT_SETTINGS.endpoint,
+      system: systemInput instanceof HTMLTextAreaElement ? systemInput.value.trim() || DEFAULT_SETTINGS.system : DEFAULT_SETTINGS.system,
+    };
+  }
+
+  function getPreferredName() {
+    const settings = readCurrentSettings();
+    return settings.displayName || "Você";
+  }
+
+  function updateDisplayNameUI() {
+    if (!(displayNameGreeting instanceof HTMLElement)) {
+      return;
+    }
+
+    const preferredName = getPreferredName();
+    displayNameGreeting.textContent = preferredName === "Você"
+      ? "Seu assistente local."
+      : `Olá, ${preferredName}.`;
+  }
+
+  function applySettings(settings) {
+    if (displayNameInput instanceof HTMLInputElement) {
+      displayNameInput.value = settings.displayName || DEFAULT_SETTINGS.displayName;
+    }
+
+    if (modelSelect instanceof HTMLSelectElement) {
+      modelSelect.value = settings.model || DEFAULT_SETTINGS.model;
+    }
+
+    if (endpointInput instanceof HTMLInputElement) {
+      endpointInput.value = settings.endpoint || DEFAULT_SETTINGS.endpoint;
+    }
+
+    if (systemInput instanceof HTMLTextAreaElement) {
+      systemInput.value = settings.system || DEFAULT_SETTINGS.system;
+    }
+
+    updateDisplayNameUI();
+  }
+
+  function saveSettings() {
+    try {
+      window.localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(readCurrentSettings()));
+    } catch (error) {
+      console.error("Não foi possível salvar as configurações.", error);
+    }
+  }
+
+  function loadSettings() {
+    try {
+      const storedSettings = window.localStorage.getItem(SETTINGS_STORAGE_KEY);
+
+      if (!storedSettings) {
+        applySettings(DEFAULT_SETTINGS);
+        return;
+      }
+
+      const parsedSettings = JSON.parse(storedSettings);
+      applySettings({
+        displayName: typeof parsedSettings.displayName === "string" ? parsedSettings.displayName : DEFAULT_SETTINGS.displayName,
+        model: typeof parsedSettings.model === "string" ? parsedSettings.model : DEFAULT_SETTINGS.model,
+        endpoint: typeof parsedSettings.endpoint === "string" ? parsedSettings.endpoint : DEFAULT_SETTINGS.endpoint,
+        system: typeof parsedSettings.system === "string" ? parsedSettings.system : DEFAULT_SETTINGS.system,
+      });
+    } catch (error) {
+      console.error("Não foi possível carregar as configurações salvas.", error);
+      applySettings(DEFAULT_SETTINGS);
+    }
+  }
+
   function showLoadingMessage() {
     if (!(messages instanceof HTMLElement) || loadingMessageElement instanceof HTMLElement) {
       return;
@@ -223,7 +347,6 @@ import styles from "../styles/balloon.module.css";
 
     const article = document.createElement("article");
     article.className = messages.dataset.loadingMessageClass ?? "";
-    article.setAttribute("data-loading-message", "true");
 
     const author = document.createElement("p");
     author.className = messages.dataset.messageAuthorClass ?? "";
@@ -231,7 +354,7 @@ import styles from "../styles/balloon.module.css";
 
     const body = document.createElement("p");
     body.className = messages.dataset.messageTextClass ?? "";
-    body.textContent = "Pensando";
+    body.textContent = "Pensando ";
 
     const dots = document.createElement("span");
     dots.className = messages.dataset.loadingDotsTrackClass ?? "";
@@ -258,55 +381,27 @@ import styles from "../styles/balloon.module.css";
     loadingMessageElement = null;
   }
 
-  function readCurrentSettings() {
-    return {
-      model: modelSelect instanceof HTMLSelectElement ? modelSelect.value : DEFAULT_SETTINGS.model,
-      endpoint: endpointInput instanceof HTMLInputElement ? endpointInput.value.trim() || DEFAULT_SETTINGS.endpoint : DEFAULT_SETTINGS.endpoint,
-      system: systemInput instanceof HTMLTextAreaElement ? systemInput.value.trim() || DEFAULT_SETTINGS.system : DEFAULT_SETTINGS.system,
-    };
-  }
-
-  function applySettings(settings: Record<string, string>) {
-    if (modelSelect instanceof HTMLSelectElement) {
-      modelSelect.value = settings.model || DEFAULT_SETTINGS.model;
+  function appendMessage(role, text) {
+    if (!(messages instanceof HTMLElement)) {
+      return;
     }
 
-    if (endpointInput instanceof HTMLInputElement) {
-      endpointInput.value = settings.endpoint || DEFAULT_SETTINGS.endpoint;
-    }
+    const article = document.createElement("article");
+    article.className = role === "user"
+      ? messages.dataset.userMessageClass ?? ""
+      : messages.dataset.assistantMessageClass ?? "";
 
-    if (systemInput instanceof HTMLTextAreaElement) {
-      systemInput.value = settings.system || DEFAULT_SETTINGS.system;
-    }
-  }
+    const author = document.createElement("p");
+    author.className = messages.dataset.messageAuthorClass ?? "";
+    author.textContent = role === "user" ? getPreferredName() : "Jarvis";
 
-  function saveSettings() {
-    try {
-      window.localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(readCurrentSettings()));
-    } catch (error) {
-      console.error("Não foi possível salvar as configurações.", error);
-    }
-  }
+    const body = document.createElement("p");
+    body.className = messages.dataset.messageTextClass ?? "";
+    body.textContent = text;
 
-  function loadSettings() {
-    try {
-      const storedSettings = window.localStorage.getItem(SETTINGS_STORAGE_KEY);
-
-      if (!storedSettings) {
-        applySettings(DEFAULT_SETTINGS);
-        return;
-      }
-
-      const parsedSettings = JSON.parse(storedSettings);
-      applySettings({
-        model: typeof parsedSettings.model === "string" ? parsedSettings.model : DEFAULT_SETTINGS.model,
-        endpoint: typeof parsedSettings.endpoint === "string" ? parsedSettings.endpoint : DEFAULT_SETTINGS.endpoint,
-        system: typeof parsedSettings.system === "string" ? parsedSettings.system : DEFAULT_SETTINGS.system,
-      });
-    } catch (error) {
-      console.error("Não foi possível carregar as configurações salvas.", error);
-      applySettings(DEFAULT_SETTINGS);
-    }
+    article.append(author, body);
+    messages.append(article);
+    messages.scrollTop = messages.scrollHeight;
   }
 
   function connectSocket() {
@@ -366,6 +461,7 @@ import styles from "../styles/balloon.module.css";
           if (pendingChatPayload) {
             pendingChatPayload.model = DEFAULT_SETTINGS.model;
             isAwaitingResponse = true;
+            showLoadingMessage();
             activeSocketSend(pendingChatPayload);
           }
           return;
@@ -380,7 +476,6 @@ import styles from "../styles/balloon.module.css";
             showLoadingMessage();
             activeSocketSend(pendingChatPayload);
           }
-          return;
         }
       } catch {
         hideLoadingMessage();
@@ -408,9 +503,12 @@ import styles from "../styles/balloon.module.css";
     return socket;
   }
 
-  function activeSocketSend(payload: Record<string, unknown>) {
+  function activeSocketSend(payload) {
     const activeSocket = connectSocket();
-    if (!activeSocket) return;
+    if (!activeSocket) {
+      return;
+    }
+
     const serializedPayload = JSON.stringify(payload);
 
     const sendPayload = () => {
@@ -425,7 +523,7 @@ import styles from "../styles/balloon.module.css";
     activeSocket.addEventListener("open", sendPayload, { once: true });
   }
 
-  function setActiveView(viewName: string) {
+  function setActiveView(viewName) {
     for (const button of viewButtons) {
       const isActive = button instanceof HTMLButtonElement && button.dataset.viewTarget === viewName;
       const activeClass = button instanceof HTMLButtonElement ? button.dataset.activeClass : "";
@@ -448,35 +546,12 @@ import styles from "../styles/balloon.module.css";
 
       const isActive = panel.dataset.viewPanel === viewName;
       panel.hidden = !isActive;
-      const hiddenClass = panel.dataset.hiddenClass;
 
+      const hiddenClass = panel.dataset.hiddenClass;
       if (hiddenClass) {
         panel.classList.toggle(hiddenClass, !isActive);
       }
     }
-  }
-
-  function appendMessage(role: string, text: string) {
-    if (!(messages instanceof HTMLElement)) {
-      return;
-    }
-
-    const article = document.createElement("article");
-    article.className = role === "user"
-      ? messages.dataset.userMessageClass ?? ""
-      : messages.dataset.assistantMessageClass ?? "";
-
-    const author = document.createElement("p");
-    author.className = messages.dataset.messageAuthorClass ?? "";
-    author.textContent = role === "user" ? "Você" : "Jarvis";
-
-    const body = document.createElement("p");
-    body.className = messages.dataset.messageTextClass ?? "";
-    body.textContent = text;
-
-    article.append(author, body);
-    messages.append(article);
-    messages.scrollTop = messages.scrollHeight;
   }
 
   function submitMessage() {
@@ -485,7 +560,6 @@ import styles from "../styles/balloon.module.css";
     }
 
     const text = input.value.trim();
-
     if (!text) {
       return;
     }
@@ -502,8 +576,11 @@ import styles from "../styles/balloon.module.css";
       message: text,
       model: settings.model,
       endpoint: settings.endpoint,
-      system: settings.system,
+      system: settings.displayName
+        ? `${settings.system}\n\nChame o usuário de ${settings.displayName} de forma natural quando fizer sentido.`
+        : settings.system,
     };
+
     activeSocketSend(pendingChatPayload);
   }
 
@@ -528,7 +605,6 @@ import styles from "../styles/balloon.module.css";
 
     button.addEventListener("click", () => {
       const target = button.dataset.viewTarget;
-
       if (target) {
         setActiveView(target);
       }
@@ -542,18 +618,27 @@ import styles from "../styles/balloon.module.css";
 
     button.addEventListener("click", () => {
       setActiveView("chat");
-      if (input instanceof HTMLElement) input.focus();
+      if (input instanceof HTMLInputElement) {
+        input.focus();
+      }
     });
   }
 
-  for (const element of [modelSelect, endpointInput, systemInput]) {
+  for (const element of [displayNameInput, modelSelect, endpointInput, systemInput]) {
     if (element instanceof HTMLInputElement || element instanceof HTMLSelectElement || element instanceof HTMLTextAreaElement) {
-      element.addEventListener("change", saveSettings);
-      element.addEventListener("input", saveSettings);
+      element.addEventListener("change", () => {
+        saveSettings();
+        updateDisplayNameUI();
+      });
+      element.addEventListener("input", () => {
+        saveSettings();
+        updateDisplayNameUI();
+      });
     }
   }
 
   loadSettings();
+  updateDisplayNameUI();
   updateConnectionStatus(false);
   connectSocket();
 </script>
