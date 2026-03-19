@@ -18,7 +18,7 @@ async function queryOllama({ endpoint, model, system, message }) {
     },
     body: JSON.stringify({
       model: model || DEFAULT_MODEL,
-      stream: false,
+      stream: true,
       messages: [
         ...(system ? [{ role: "system", content: system }] : []),
         { role: "user", content: message },
